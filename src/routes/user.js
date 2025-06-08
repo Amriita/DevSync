@@ -10,7 +10,7 @@ userRouter.get("/requests/received", userAuth, async (req, res) => {
         const connectionRequests = await ConnectionRequest.find({
             receiverId: loggedUser._id,
             status: "intrested"
-        }).populate("senderId", ["firstName", "lastName", "skills", "profilePicture", "gender"]);
+        }).populate("senderId", ["firstName", "lastName", "skills", "photoUrl", "gender", "age", "about"]);
 
         res.status(200).send(connectionRequests);
     } catch (error) {
@@ -29,9 +29,10 @@ userRouter.get("/connections", userAuth, async (req, res) => {
                 { receiverId: loggedUser._id, status: "accepted" }
             ]
         })
-        .populate("receiverId", ["firstName", "lastName", "skills", "profilePicture", "gender"])
-        .populate("senderId", ["firstName", "lastName", "skills", "profilePicture", "gender"]);
+        .populate("receiverId", ["firstName", "lastName", "skills", "photoUrl", "gender", "age", "about"])
+        .populate("senderId", ["firstName", "lastName", "skills", "photoUrl", "gender", "age", "about"]);
 
+        console.log(connections);
         const data = connections.map(row => {
             if(row.senderId._id.toString() === loggedUser._id.toString()) {
                 return row.receiverId;
