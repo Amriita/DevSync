@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+require('dotenv').config();
 
 const userAuth = async (req, res, next) => {
     try {
@@ -7,7 +8,7 @@ const userAuth = async (req, res, next) => {
         if (!token) {
             throw new Error("Unauthorized");
         }
-        const decodedToken = jwt.verify(token, "Dev@Sync0510");
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const user = await User.findById(decodedToken._id);
         if (!user) {
             throw new Error("User doesn't exist");
