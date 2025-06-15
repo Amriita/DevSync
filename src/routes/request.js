@@ -4,6 +4,8 @@ const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
 const User = require("../models/user");
 
+const sendEmail = require("../utils/sendEmail");
+
 requestRouter.post('/send/:status/:userId', userAuth, async (req, res) => {
     try {
         const { status, userId } = req.params;
@@ -44,6 +46,8 @@ requestRouter.post('/send/:status/:userId', userAuth, async (req, res) => {
             status
         });
         await connectionRequest.save();
+        const emailRes = await sendEmail.run("DevSync",`${user.firstName} ${user.lastName} Connection request sent successfully`);
+        console.log("Email sent successfully", emailRes)
         res.status(200).send({
             message: `${user.firstName} ${user.lastName} Connection request sent successfully`,
             connectionRequest

@@ -1,0 +1,14 @@
+## sending Emails from Amazon ses
+   - create a IAM User and attach the policy 
+   - give access to the amazonSesfullAccess
+   - Amazon ses: create identity
+   - Verify the email or domain
+   - for sandbox mode, you have to verify the to and from email address
+   - install Aws sdk for nodejs
+   - javascript v3
+   - setup ses client
+   - use this repo : https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/javascriptv3/example_code/ses#code-examples
+   - get credentials from IAM user create access key and get th access key id and secret access key
+   - create ses client
+   - create send email function
+   - send email
